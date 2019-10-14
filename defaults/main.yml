@@ -1,0 +1,54 @@
+---
+# defaults file for ansible-spectrum-control
+
+##------------ IBM Spectrum Control -----------------------------------#
+
+# Default unarchive names
+sc_creates: sc_binary
+sc_license_creates: sc_license
+
+
+#sc_binary:
+#  url: "http://10.33.3.56/sc/SC534/SPM_CTL_SERVER_V5.3.4_LINUX.tar.gz"
+#  location: "/download/installer/sc.tar.gz"
+#  dest: "/download/installer"
+#sc_license_binary:
+#  url: "http://10.33.3.56/sc/SC534/IBM_SPM_CTL_ADV_V5.3.4_Lcns_UNIX.tar.gz"
+#  location: "/download/installer/sc_license.tar.gz"
+#  dest: "/download/installer/"
+
+sc_binary_download_delete: true
+
+########### Silent Install Properties file #############
+
+## Temporary location for Silent file.
+sc_properties_location: '/tmp'
+
+
+sc_properties_default:
+  language: 'en'
+  user_install_dir: '/opt/IBM/TPC'
+  #varTPCPortRangeSP: '9549'
+  #varFullRollback: '0'
+  #varUseLicenseKeyOnImage: '0'
+  #varLicenseKeyFile:
+
+############ SC Database Advanced Customization #############################
+#  SC Database Advanced Customization - Modify the silent variables below to
+#  further customize the SC Database component installation.
+#sc_properties_custom:
+  #varDBAdmUsr:
+  #varDBAdmPW:
+  #varDBName: 'TPCDB'
+  #varDBPath:
+  #varDBLogPath:
+
+############ SC Spectrum Control Upgrade #############################
+sc_upgrade: false
+sc_properties_upgrade:
+  license_accept: 'false'
+  confirm_replication_uninstall: 'false'
+  confirm_reports_uninstall: 'false'
+  varAlertKeystorePW: 'default'
+  varDeviceKeystorePW: 'default'
+  varWebKeystorePW: 'default'

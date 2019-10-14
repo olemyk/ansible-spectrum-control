@@ -1,0 +1,18 @@
+---
+# tasks file for ansible-spectrum-control
+
+- import_tasks: get_sc.yml
+  tags: get_sc
+
+- import_tasks: install_sc.yml
+  tags: install_sc
+  when:
+    - not sc_upgrade | bool
+
+- import_tasks: upgrade_sc.yml
+  tags: upgrade_sc
+  when:
+    - sc_upgrade | bool
+
+- import_tasks: finalize.yml
+  tags: sc_finalize

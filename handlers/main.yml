@@ -1,0 +1,26 @@
+---
+# handlers file for ansible-spectrum-control
+
+- name: startTPCDevice
+  command: /opt/IBM/TPC/scripts/startTPCDevice.sh
+
+- name: startTPCData
+  command: /opt/IBM/TPC/scripts/startTPCData.sh
+
+- name: startTPCWeb
+  command: /opt/IBM/TPC/scripts/startTPCWeb.sh
+
+- name: startTPCAlert
+  command: /opt/IBM/TPC/scripts/startTPCAlert.sh
+
+- name: stopTPCDevice
+  command: /opt/IBM/TPC/scripts/stopTPCDevice.sh
+
+- name: stopTPCData
+  command: /opt/IBM/TPC/scripts/stopTPCData.sh
+
+- name: stopTPCWeb
+  command: /opt/IBM/TPC/scripts/stopTPCWeb.sh
+
+- name: stopTPCAlert
+  command: /opt/IBM/TPC/scripts/stopTPCAlert.sh

@@ -1,0 +1,94 @@
+---
+## Task for Upgrading Spectrum Control.
+- name: Upgrade SC | Verify Spectrum Control Version with build
+  command: 'cat "{{ sc_properties_default.user_install_dir }}/data/version.txt"'
+  register: sc_installed_sc_version_build
+  ignore_errors: true
+
+- name: Upgrade SC | Verify Spectrum Control Version
+  command: "{{ sc_properties_default.user_install_dir }}/cli/tpctool.sh -ver"
+  register: sc_installed_sc_version
+  ignore_errors: true
+
+- name: Upgrade SC | Parse properties file
+  template:
+    src: silent_Upgrade.properties.j2
+    dest: "{{ sc_properties_location }}/silent_Upgrade.properties"
+  tags: sc_install_parse_properties
+
+- name: Upgrade SC | Verify Spectrum Control Upgraded Version - Output
+  debug:
+    msg: "{{ sc_installed_sc_version.stdout }}"
+
+#
+# Upgrade the and Configure IBM Spectrum Control
+#
+- block:
+  - name: Upgrade SC | Upgrading and configuring IBM Spectrum Control. - Be patient. Everything is coming together. This will take approximately 20 minutes.
+    shell: >
+      source "{{ sc_db2_home_directory }}/sqllib/db2profile" && "{{ sc_binary.dest }}/SC/setup.bin" -i silent
+      -f "{{ sc_properties_location }}/silent_Upgrade.properties"
+
+# For errors: check the lax*-out.txt & lax*-err.txt files in /tmp on the SC host.
+
+  - name: Upgrade SC | Wait until the string "completed" is in the file msgTPCInstall.log before continuing
+    wait_for:
+      path: "{{ sc_upgrade_user_install_dir |default('/opt/IBM/TPC') }}/logs/msgTPCInstall.log"
+      search_regex: BPCIN0002I The system completed the installation of IBM Spectrum Control.
+      delay: 10
+
+  - name: Upgrade SC | Verify Spectrum Control Upgraded Version
+    command: "{{ sc_properties_default.user_install_dir }}/cli/tpctool.sh -ver"
+    register: sc_upgraded_sc_version
+    ignore_errors: true
+
+  - name: Upgrade SC | Verify Spectrum Control Upgraded Version - Output
+    debug:
+      msg: "{{ sc_upgraded_sc_version.stdout }}"
+
+  - name: Upgrade SC | Wait until the string "completed" is in the file msgTPCInstall.log before continuing
+    wait_for:
+      path: "{{ sc_upgrade_user_install_dir }}/logs/msgTPCInstall.log"
+      search_regex: BPCIN0002I The system completed the installation of IBM Spectrum Control.
+
+  when: sc_upgrade_version > sc_installed_sc_version.stdout
+
+#
+# Verify Upgrade and Check Services.
+#
+
+- name: Upgrade SC | Verify that deviceServer is running
+  command: "./server status deviceServer"
+  args:
+    chdir: "{{ sc_upgrade_user_install_dir |default('/opt/IBM/TPC') }}/wlp/bin/"
+  register: sc_status_deviceServer
+  ignore_errors: true
+
+- name: Upgrade SC | Verify that WebServer is running
+  command: "./server status webServer"
+  args:
+    chdir: "{{ sc_upgrade_user_install_dir |default('/opt/IBM/TPC') }}/wlp/bin/"
+  register: sc_status_WebServer
+  ignore_errors: true
+
+- name: Upgrade SC | Verify that alertServer is running
+  command: "./server status alertServer"
+  args:
+    chdir: "{{ sc_upgrade_user_install_dir |default('/opt/IBM/TPC') }}/wlp/bin/"
+  register: sc_status_alertServer
+  ignore_errors: true
+
+#
+# Clean up and Delete Binary and Properties files
+#
+
+- name: Upgrade SC | Deleting install folder
+  file:
+    path: "{{ sc_binary.dest }}"
+    state: absent
+  when: sc_binary_download_delete | bool
+
+- name: Upgrade SC | Deleting Properties files.
+  file:
+    path: "{{ sc_properties_location }}/silent_Upgrade.properties"
+    state: absent

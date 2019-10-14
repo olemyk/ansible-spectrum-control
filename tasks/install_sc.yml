@@ -1,0 +1,78 @@
+---
+#
+# Task for Installation of Spectrum Control.
+#
+- name: Install SC | Verify Spectrum Control Version with build
+  command: 'cat "{{ sc_properties_default.user_install_dir }}/data/version.txt"'
+  register: sc_installed_sc_version_build
+  ignore_errors: true
+
+- name: Install SC | Verify Spectrum Control Version
+  command: "{{ sc_properties_default.user_install_dir }}/cli/tpctool.sh -ver"
+  register: sc_installed_sc_version
+  ignore_errors: true
+
+- name: Install SC | Adding the DB2 user to the root group.
+  user:
+    name: "{{ sc_properties.varCommonUsrID }}"
+    groups: root
+    append: yes
+
+- name: Install SC | Parse properties file
+  template:
+    src: silent_SingleServer.properties.j2
+    dest: "{{ sc_properties_location }}/silent_SingleServerTypical.properties"
+  when: sc_installed_sc_version.rc ==2
+
+- name: Install SC | Installing and configuring IBM Spectrum Control - Be patient. Everything is coming together - This will take approximately -10-20 minutes.
+  shell: >
+    source "{{ sc_db2_home_directory }}/sqllib/db2profile" && "{{ sc_binary.dest }}/SC/setup.bin"
+    -l "{{ sc_properties_default.language |default(en) }}" -i Silent -f "{{ sc_properties_location }}/silent_SingleServerTypical.properties"
+  when: sc_installed_sc_version.rc ==2
+
+# For errors: check the lax*-out.txt & lax*-err.txt files in /tmp on the SC host.
+
+- name: Install SC | Wait until the string "completed" is in the file msgTPCInstall.log before continuing
+  wait_for:
+    path: "{{ sc_properties_default.user_install_dir }}/logs/msgTPCInstall.log"
+    search_regex: BPCIN0002I The system completed the installation of IBM Spectrum Control.
+    delay: 10
+  when: sc_installed_sc_version.rc == 2
+
+#
+# Verify Install and Check Services.
+#
+
+- name: Install SC | Verify that deviceServer is running
+  command: "./server status deviceServer"
+  args:
+    chdir: "{{ sc_properties_default.user_install_dir |default('/opt/IBM/TPC') }}/wlp/bin/"
+  register: sc_status_deviceServer
+  ignore_errors: true
+
+- name: Install SC | Verify that WebServer is running
+  command: "./server status webServer"
+  args:
+    chdir: "{{ sc_properties_default.user_install_dir |default('/opt/IBM/TPC') }}/wlp/bin/"
+  register: sc_status_WebServer
+  ignore_errors: true
+
+- name: Install SC | Verify that alertServer is running
+  command: "./server status alertServer"
+  args:
+    chdir: "{{ sc_properties_default.user_install_dir |default('/opt/IBM/TPC') }}/wlp/bin/"
+  register: sc_status_alertServer
+  ignore_errors: true
+#
+# Clean Up install files.
+#
+- name: Install SC | Deleting install folder
+  file:
+    path: "{{ sc_binary.dest }}"
+    state: absent
+  when: sc_binary_download_delete | bool
+
+- name: Install SC | Deleting Properties files.
+  file:
+    path: "{{ sc_properties_location }}/silent_SingleServerTypical.properties"
+    state: absent

@@ -1,0 +1,11 @@
+---
+- name: Install SC | finalize installation
+  changed_when: false
+  vars:
+    msg: |-
+      #######################################################################
+       Configuration is finished installing and configuring IBM Spectrum Control
+       To access IBM Spectrum Control go to https://{{ ansible_default_ipv4.address }}:9569/srm/
+      #######################################################################
+  debug:
+    msg: "{{ msg.split('\n') }}"

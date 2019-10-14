@@ -1,0 +1,117 @@
+# ***************************************************************************
+# IBM Confidential
+# (C) Copyright IBM Corp. 2012, 2018
+# 5725-F92, 5725-F93, 5725-G33
+#
+# All Rights Reserved
+# Licensed Material - Property of IBM
+# The source code for this program is not published or otherwise
+# divested of its trade secrets, irrespective of what has
+# been deposited with the U. S. Copyright Office.
+#  
+#  U.S. Government Users Restricted Rights 
+#  Use, duplication or disclosure restricted by GSA ADP Schedule Contract with 
+#  IBM Corp. 
+#
+#****************************************************************************
+
+#------------------------------------------------------------------------------
+# This file lists the silent install variables needed to upgrade from TPC 5.x.
+#
+# Note! Monitoring Agent for Windows OS - Watchdog and Monitoring Agent 
+# for Windows OS - Primary services must be stopped before you install or 
+# upgrade.
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Specify the preferred installation language. 
+# The supported values are: cs, de, en, es, fr, it, ja, ko, pl, pt_BR, hu, 
+#                           ru, zh_CN, zh_TW
+#------------------------------------------------------------------------------
+# Use the -l command-line argument for setup.exe/bin to specify the language to 
+# be used when making a silent install. Example for setting French as the 
+# install language on Windows:
+#   setup.bat -l fr -i silent -f c:\TPC\silent_Upgrade.properties
+# When specifying a value that is not in our list, the default locale will be 
+# used by the Installer (e.g. en for English).
+#------------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------
+# Set Silent License Acceptance
+#
+# To accept the license agreement: change the value to true.
+#                 example: LICENSE_ACCEPTED=true
+# If the LICENSE_ACCEPTED has a value other than 'true' the installation 
+# will exit.
+#
+# BY CHANGING THE LICENSE_ACCEPTED FROM 'false' TO 'true' AND PERFORMING THIS 
+# SILENT INSTALLATION, LICENSEE AGREES TO THE TERMS OF IBM SPECTRUM CONTROL
+# LICENSE AGREEMENT. IF YOU ARE ACCEPTING THESE TERMS 
+# ON BEHALF OF LICENSEE, YOU REPRESENT AND WARRANT THAT YOU HAVE FULL AUTHORITY 
+# TO BIND LICENSEE TO THESE TERMS. IF YOU DO NOT AGREE TO THESE TERMS,
+# * DO NOT DOWNLOAD, INSTALL, COPY, ACCESS, OR USE THE PROGRAM; AND
+# * PROMPTLY RETURN THE UNUSED MEDIA AND DOCUMENTATION TO IBM. IF THE PROGRAM 
+#   WAS DOWNLOADED, DESTROY ALL COPIES OF THE PROGRAM.
+#------------------------------------------------------------------------------
+LICENSE_ACCEPTED={{ sc_properties_upgrade.license_accept }}
+
+#------------------------------------------------------------------------------
+# Acknowledge uninstall of Replication server
+#
+# To acknowledge uninstall of Replication server: change the value to true.
+#                 example: CONFIRM_REPLICATION_UNINSTALL=true
+# If the CONFIRM_REPLICATION_UNINSTALL has a value other than 'true'
+# the upgrade will exit. 
+#------------------------------------------------------------------------------
+{%if sc_properties_upgrade.confirm_replication_uninstall is defined %}
+CHOSEN_INSTALL_TYPE={{ sc_properties_upgrade.confirm_replication_uninstall }}
+{% else %}
+CONFIRM_REPORTS_UNINSTALL=default
+{% endif %}
+
+#------------------------------------------------------------------------------
+# Acknowledge uninstall of Cognos BI Reports
+#
+# To acknowledge uninstall of Cognos BI Reports: change the value to true.
+#                 example: CONFIRM_REPORTS_UNINSTALL=true
+# If the CONFIRM_REPORTS_UNINSTALL has a value other than 'true'
+# the upgrade will exit. 
+#------------------------------------------------------------------------------
+{%if sc_properties_upgrade.confirm_reports_uninstall is defined %}
+CHOSEN_INSTALL_TYPE={{ sc_properties_upgrade.confirm_reports_uninstall }}
+{% else %}
+CONFIRM_REPORTS_UNINSTALL=default
+{% endif %}
+
+#------------------------------------------------------------------------------
+# Specify the Installation Type. The following installation types are supported:
+#   a) Upgrade
+#
+# This silent install file will work with "Upgrade" types only.
+#------------------------------------------------------------------------------
+CHOSEN_INSTALL_TYPE="Upgrade"
+
+#------------------------------------------------------------------------------
+# Specify the password for the Alert server, Device server, and Web server
+# keystore files. The default keystore password is default. If any of the
+# specified keystore passwords are incorrect, the upgrade will exit. If you
+# do not know one or more of the keystore passwords, see the Troubleshooting
+# topic "Creating a new keystore for an IBM Spectrum Control server."
+# in the IBM Spectrum Control Knowledge Center.
+#------------------------------------------------------------------------------
+{%if sc_properties_upgrade.varAlertKeystorePW is defined %}
+varAlertKeystorePW={{ sc_properties_upgrade.varAlertKeystorePW }}
+{% else %}
+varAlertKeystorePW=default
+{% endif %}
+
+{%if sc_properties_upgrade.varDeviceKeystorePW is defined %}
+varDeviceKeystorePW={{ sc_properties_upgrade.varDeviceKeystorePW }}
+{% else %}
+varDeviceKeystorePW=default
+{% endif %}
+
+{%if sc_properties_upgrade.varWebKeystorePW is defined %}
+varWebKeystorePW={{ sc_properties_upgrade.varWebKeystorePW }}
+{% else %}
+varWebKeystorePW=default
+{% endif %}

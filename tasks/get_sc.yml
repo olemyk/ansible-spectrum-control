@@ -1,0 +1,42 @@
+---
+# Task to download and unpack binary to host
+- name: Get SC Binary | Create SC Installer Directory
+  file:
+    path: "{{ sc_binary.dest }}"
+    state: directory
+    mode: 0755
+
+- name: Get SC Binary | Create SC License Installer Directory
+  file:
+    path: "{{ sc_license_binary.dest }}"
+    state: directory
+    mode: 0755
+
+# Download a SC copy from a custom URL (Could be a http, an ftp whatever.)
+- name: Get SC Binary | Downloading SC
+  get_url:
+    url: "{{ sc_binary.url }}"
+    dest: "{{ sc_binary.location }}"
+  when: sc_binary.url is defined
+
+# Decompressing SC Binary
+- name: Get SC Binary | Decompressing SC Server
+  unarchive:
+    src: "{{ sc_binary.location }}"
+    dest: "{{ sc_binary.dest }}"
+    creates: "{{ sc_binary.dest }}/{{ sc_creates }}"
+    remote_src: yes
+
+# Decompressing SC license binary
+- name: Get SC Binary | Downloading SC license file
+  get_url:
+    url: "{{ sc_license_binary.url }}"
+    dest: "{{ sc_license_binary.location }}"
+  when: sc_license_binary.url is defined
+
+- name: Get SC Binary | Decompressing SC license file
+  unarchive:
+    src: "{{ sc_license_binary.location }}"
+    dest: "{{ sc_license_binary.dest }}"
+    creates: "{{ sc_license_binary.dest }}/{{ sc_license_creates }}"
+    remote_src: yes

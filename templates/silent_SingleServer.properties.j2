@@ -1,0 +1,231 @@
+# ***************************************************************************
+# IBM Confidential
+# (C) Copyright IBM Corp. 2012, 2018
+# 5725-F92, 5725-F93, 5725-G33
+#
+# All Rights Reserved
+# Licensed Material - Property of IBM
+# The source code for this program is not published or otherwise
+# divested of its trade secrets, irrespective of what has
+# been deposited with the U. S. Copyright Office.
+#  
+#  U.S. Government Users Restricted Rights 
+#  Use, duplication or disclosure restricted by GSA ADP Schedule Contract with 
+#  IBM Corp. 
+#
+#****************************************************************************
+
+#------------------------------------------------------------------------------
+# This file lists the silent install variables needed to install all SC 
+# components on a single server without any advanced customization.
+#
+# Note! Monitoring Agent for Windows OS - Watchdog and Monitoring Agent 
+# for Windows OS - Primary services must be stopped before you install or 
+# upgrade.
+#------------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------
+# Set Silent License Acceptance
+#
+# To accept the license agreement: change the value to true.
+#                 example: LICENSE_ACCEPTED=true
+# If the LICENSE_ACCEPTED has a value other than 'true' the installation 
+# will exit.
+#
+# BY CHANGING THE LICENSE_ACCEPTED FROM 'false' TO 'true' AND PERFORMING THIS 
+# SILENT INSTALLATION, LICENSEE AGREES TO THE TERMS OF IBM SPECTRUM CONTROL
+# LICENSE AGREEMENT. IF YOU ARE ACCEPTING THESE TERMS 
+# ON BEHALF OF LICENSEE, YOU REPRESENT AND WARRANT THAT YOU HAVE FULL AUTHORITY 
+# TO BIND LICENSEE TO THESE TERMS. IF YOU DO NOT AGREE TO THESE TERMS,
+# * DO NOT DOWNLOAD, INSTALL, COPY, ACCESS, OR USE THE PROGRAM; AND
+# * PROMPTLY RETURN THE UNUSED MEDIA AND DOCUMENTATION TO IBM. IF THE PROGRAM 
+#   WAS DOWNLOADED, DESTROY ALL COPIES OF THE PROGRAM.
+#------------------------------------------------------------------------------
+LICENSE_ACCEPTED={{ sc_properties.license_accept }}
+
+
+#------------------------------------------------------------------------------
+# Specify the Installation Type. The following installation types are supported
+# by this file:
+#   a) Single Server Install 
+#   b) License Upgrade
+#------------------------------------------------------------------------------
+{%if sc_properties.user_install_dir is defined %}
+CHOSEN_INSTALL_TYPE={{ sc_properties_default.install_type }}
+{% else %}
+CHOSEN_INSTALL_TYPE="Single Server Install"
+{% endif %}
+
+
+#------------------------------------------------------------------------------
+# Specify the directory where the SC software will be installed. In case of 
+# upgrade and resuming failed install scenarios, specify the directory where 
+# SC software is installed. The default value on Windows is 
+# C:\\Program Files\\IBM\\TPC and on Unix is /opt/IBM/TPC
+#------------------------------------------------------------------------------
+{%if sc_properties.user_install_dir is defined %}
+USER_INSTALL_DIR={{ sc_properties_default.user_install_dir }}
+{% else %}
+USER_INSTALL_DIR=/opt/IBM/TPC
+{% endif %}
+
+#------------------------------------------------------------------------------
+# Specify the preferred installation language. 
+# The supported values are: cs, de, en, es, fr, it, ja, ko, pl, pt_BR, hu, 
+#                           ru, zh_CN, zh_TW
+#------------------------------------------------------------------------------
+# Use the -l command-line argument for setup.exe/bin to specify the language to
+# be used when making a silent install. Example for setting French as the
+# install language on Windows:
+#   setup.bat -l fr -i silent -f c:\TPC\silent_SingleServerTypical.properties
+# When specifying a value that is not in our list, the default locale will be
+# used by the Installer (e.g. en for English)
+
+#------------------------------------------------------------------------------
+# Specify the hostname of this local server machine where SC software will be 
+# installed. The hostname can be a fully qualified hostname 
+# (e.g, aix03.storage.usca.ibm.com )
+#------------------------------------------------------------------------------
+varSrvName={{ sc_properties.varSrvName }}
+
+
+#------------------------------------------------------------------------------
+# Specify the range of the ports needed to install the SC software. SC needs 
+# 24 ports. The default port range is 9549 to 9572. SC uses these default
+# ports:
+# Data server: 9549
+# Device server: 9550, 9551, 9553, 9572
+# Alert server: 9556, 9570, 9571
+# Export server: 9562
+# Web server: 9554, 9568, 9569
+# Storage Resource agent: 9567
+# 
+# Enter the starting port of the range below. The starting port and the next 23 
+# ports will be used by SC.
+#------------------------------------------------------------------------------
+{%if sc_properties_default.varTPCPortRangeSP is defined %}
+varTPCPortRangeSP={{ sc_properties_default.varTPCPortRangeSP }}
+{% else %}
+varTPCPortRangeSP=9549
+{% endif %}
+
+#------------------------------------------------------------------------------
+# Specify the common user ID. This user id will be used to install SC software.
+# This user id needs to have administrative privileges for the server and the 
+# DB2 software. The default value is db2admin for Windows and db2inst1 for unix 
+# platforms. 
+#------------------------------------------------------------------------------
+varCommonUsrID={{ sc_properties.varCommonUsrID }}
+
+
+#------------------------------------------------------------------------------
+# Specify the valid password for the common user ID 
+#------------------------------------------------------------------------------
+varCommonUsrPW={{ sc_properties.varCommonUsrPW }}
+
+
+#------------------------------------------------------------------------------
+# Specify the type of rollback you would like the installer to perform in the 
+# event of a failure. 
+# The following options are available:
+# a) partial rollback - The installer will only uninstall the last component 
+#    that failed to install. It will retain the successfully installed 
+#    components. 
+# b) full rollback - The installer will uninstall all the SC components.
+#
+# The following values are supported:
+# a) 0 = partial rollback(default value)
+# b) 1 = full rollback
+#------------------------------------------------------------------------------
+{%if sc_properties_default.varFullRollback is defined %}
+varFullRollback={{ sc_properties_default.varFullRollback }}
+{% else %}
+varFullRollback=0
+{% endif %}
+
+
+###############################################################################
+# SC Upgrade License - Modify the silent variables below to upgrade the SC 
+# license type.
+###############################################################################
+
+#------------------------------------------------------------------------------
+# Specify whether to use the license key file present on the install image.
+#
+# The following values are supported:
+# a) 0 = use license key present on the install image (default value)
+# b) 1 = provide the location of the license key file 
+#------------------------------------------------------------------------------
+{%if sc_properties_default.varUseLicenseKeyOnImage is defined %}
+varUseLicenseKeyOnImage={{ sc_properties_default.varUseLicenseKeyOnImage }}
+{% else %}
+varUseLicenseKeyOnImage=0
+{% endif %}
+
+
+
+#------------------------------------------------------------------------------
+# Specify the complete path for the license key file. 
+# (e.g. C:\\license\\key\\nodelock.AE)
+# This value needs to be specified if varUseLicenseKeyOnImage is set to 1.
+#------------------------------------------------------------------------------
+{%if sc_properties_default.varLicenseKeyFile is defined %}
+varLicenseKeyFile={{ sc_properties_default.varLicenseKeyFile }}
+{% else %}
+varLicenseKeyFile=
+{% endif %}
+
+
+###############################################################################
+# SC Database Advanced Customization - Modify the silent variables below to
+# further customize the SC Database component installation.
+###############################################################################
+
+#------------------------------------------------------------------------------
+# Specify the DB2 user ID. This user id will be used to install SC database
+# component. This user id needs to have administrative privileges for the DB2
+# software. The default value is db2admin for Windows and db2inst1 for unix
+# platforms.
+#------------------------------------------------------------------------------
+{%if sc_properties_custom.varDBAdmUsr is defined %}
+varDBAdmUsr={{ sc_properties_custom.varDBAdmUsr }}
+{% endif %}
+
+
+#------------------------------------------------------------------------------
+# Specify the valid password for the DB2 User ID
+#------------------------------------------------------------------------------
+{%if sc_properties_custom.varDBAdmPW is defined %}
+varDBAdmPW={{ sc_properties_custom.varDBAdmPW }}
+{% endif %}
+
+#------------------------------------------------------------------------------
+# Specify the SC database name
+#------------------------------------------------------------------------------
+{%if sc_properties_custom.varDBName is defined %}
+varDBName={{ sc_properties_custom.varDBName }}
+{% endif %}
+
+
+#------------------------------------------------------------------------------
+# Specify the SC database path. The user can specify multiple paths which are
+# separated using ',' character (e.g. C:,D: on Windows or
+# /home/db2inst1,/testPath on unix platforms)
+# The default value of varDBPath variable is set to <dftdbpath>, where
+# dftdbpath is the default DB2 database path configuration parameter.
+#------------------------------------------------------------------------------
+{%if sc_properties_custom.varDBPath is defined %}
+varDBPath={{ sc_properties_custom.varDBPath }}
+{% endif %}
+
+
+#------------------------------------------------------------------------------
+# Specify the SC database log path. The SC database logs are stored in this
+# directory. The default value of the varDBLogPath variable is set to
+# <dftdbpath>/<instance name>/<varDBName>/SQLLOG
+# (e.g. C:\\DB2\\TPCDB\\SQLLOG on Windows or
+# /home/db2inst1/db2inst1/TPCDB/SQLLOG on unix platforms)
+#------------------------------------------------------------------------------
+{%if sc_properties_custom.varDBLogPath is defined %}
+varDBLogPath={{ sc_properties_custom.varDBLogPath }}
+{% endif %}
