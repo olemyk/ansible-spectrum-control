@@ -113,16 +113,17 @@ This controls how to send the SC binary to the remote hosts.´
       varCommonUsrID: 'db2inst1'
       varCommonUsrPW: 'mypassword'
 
+
 - Default Silent install Properties
 
 
-    sc_properties_default:
-      language: 'en'
-      user_install_dir: '/opt/IBM/TPC'
-      varTPCPortRangeSP: '9549'
-      varFullRollback: '0'
-      varUseLicenseKeyOnImage: '0'
-      varLicenseKeyFile:
+        sc_properties_default:
+          language: 'en'
+          user_install_dir: '/opt/IBM/TPC'
+          varTPCPortRangeSP: '9549'
+          varFullRollback: '0'
+          varUseLicenseKeyOnImage: '0'
+          varLicenseKeyFile:
 
 #### SC Database Advanced Customization
   Modify the silent variables below to further customize the SC Database component installation.
