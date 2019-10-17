@@ -5,11 +5,13 @@
 - name: Install SC | Verify Spectrum Control Version with build
   command: 'cat "{{ sc_properties_default.user_install_dir }}/data/version.txt"'
   register: sc_installed_sc_version_build
+  changed_when: false
   ignore_errors: true
 
 - name: Install SC | Verify Spectrum Control Version
   command: "{{ sc_properties_default.user_install_dir }}/cli/tpctool.sh -ver"
   register: sc_installed_sc_version
+  changed_when: false
   ignore_errors: true
 
 - name: Install SC | Adding the DB2 user to the root group.
@@ -49,6 +51,7 @@
     chdir: "{{ sc_properties_default.user_install_dir |default('/opt/IBM/TPC') }}/wlp/bin/"
   register: sc_status_deviceServer
   ignore_errors: true
+  changed_when: false
 
 - name: Install SC | Verify that WebServer is running
   command: "./server status webServer"
@@ -56,6 +59,7 @@
     chdir: "{{ sc_properties_default.user_install_dir |default('/opt/IBM/TPC') }}/wlp/bin/"
   register: sc_status_WebServer
   ignore_errors: true
+  changed_when: false
 
 - name: Install SC | Verify that alertServer is running
   command: "./server status alertServer"
@@ -63,8 +67,9 @@
     chdir: "{{ sc_properties_default.user_install_dir |default('/opt/IBM/TPC') }}/wlp/bin/"
   register: sc_status_alertServer
   ignore_errors: true
+  changed_when: false
 #
-# Clean Up install files.
+# Clean up and Delete binary and properties files
 #
 - name: Install SC | Deleting install folder
   file:

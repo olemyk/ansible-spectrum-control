@@ -4,11 +4,13 @@
   command: 'cat "{{ sc_properties_default.user_install_dir }}/data/version.txt"'
   register: sc_installed_sc_version_build
   ignore_errors: true
+  changed_when: false
 
 - name: Upgrade SC | Verify Spectrum Control Version
   command: "{{ sc_properties_default.user_install_dir }}/cli/tpctool.sh -ver"
   register: sc_installed_sc_version
   ignore_errors: true
+  changed_when: false
 
 - name: Upgrade SC | Parse properties file
   template:
@@ -63,6 +65,7 @@
     chdir: "{{ sc_upgrade_user_install_dir |default('/opt/IBM/TPC') }}/wlp/bin/"
   register: sc_status_deviceServer
   ignore_errors: true
+  changed_when: false
 
 - name: Upgrade SC | Verify that WebServer is running
   command: "./server status webServer"
@@ -70,6 +73,7 @@
     chdir: "{{ sc_upgrade_user_install_dir |default('/opt/IBM/TPC') }}/wlp/bin/"
   register: sc_status_WebServer
   ignore_errors: true
+  changed_when: false
 
 - name: Upgrade SC | Verify that alertServer is running
   command: "./server status alertServer"
@@ -77,6 +81,7 @@
     chdir: "{{ sc_upgrade_user_install_dir |default('/opt/IBM/TPC') }}/wlp/bin/"
   register: sc_status_alertServer
   ignore_errors: true
+  changed_when: false
 
 #
 # Clean up and Delete Binary and Properties files

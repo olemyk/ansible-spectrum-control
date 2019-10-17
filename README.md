@@ -104,6 +104,18 @@ This controls how to send the SC binary to the remote hosts.´
     sc_properties_location: '/tmp'
     
 #### Silent Install Properties file
+    
+    ### SC Install - Populate properties
+    sc_db2_home_directory: '/db2/db2inst1'
+    sc_properties:
+      license_accept: 'true'
+      varSrvName: 'lbs-sc.lbs.loc'
+      varCommonUsrID: 'db2inst1'
+      varCommonUsrPW: 'mypassword'
+
+- Default Silent install Properties
+
+
     sc_properties_default:
       language: 'en'
       user_install_dir: '/opt/IBM/TPC'
