@@ -185,7 +185,8 @@ Including an example of how to use the role.
 
     - hosts: sc
       gather_facts: True
-         - ansible-spectrum-control
+      roles:
+         - olemyk.ansible_spectrum_control
       vars:
         ## Define the sc_binary and setup the URL to download.
         ## Variable 'location' define where should put SC on ansible machine
@@ -228,8 +229,8 @@ Including an example of how to use the role.
             state: directory
             mode: 0755
       roles:
-         - ansible-role-db2
-         - ansible-spectrum-control
+         - olemyk.ansible_role_db2
+         - olemyk.ansible_spectrum_control
       vars:
         ## Define the db2_binary and setup the URL to download.
         ## Variable location define where should put db2 on ansible machine
@@ -312,7 +313,8 @@ Including an example of how to use the role.
          
     - hosts: sc
       gather_facts: True
-         - ansible-spectrum-control
+      roles:
+         - olemyk.ansible_spectrum_control
       vars:
         ## Define the sc_binary and setup the URL to download.
         ## Variable 'location' define where should put SC on ansible machine
@@ -360,8 +362,8 @@ Including an example of how to use the role.
             state: directory
             mode: 0755
       roles:
-         - ansible-role-db2
-         - ansible-spectrum-control
+         - olemyk.ansible_role_db2
+         - olemyk.ansible_spectrum_control
       vars:
         ##
         ## Define the db2_binary and setup the URL to download.
