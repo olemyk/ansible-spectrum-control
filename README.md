@@ -1,4 +1,4 @@
-IBM Spectrum Control Ansible Role
+IBM Spectrum Control - Ansible Role
 =========
 [![GitHub Issues](https://img.shields.io/github/issues/olemyk/ansible-spectrum-control.svg)](https://github.com/olemyk/ansible-spectrum-control//issues) 
 [![GitHub Stars](https://img.shields.io/github/stars/olemyk/ansible-spectrum-control.svg?label=github%20%E2%98%85)](https://github.com/olemyk/ansible-spectrum-control/) 
