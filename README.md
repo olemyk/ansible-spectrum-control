@@ -104,6 +104,16 @@ This controls how to send the SC binary to the remote hosts.´
     sc_properties_location: '/tmp'
     
 #### Silent Install Properties file
+
+##### Silent install Properties
+
+- **db2_home_directory:** is home directory for your user:
+- **license_accept:** If the LICENSE_ACCEPTED has a value other than 'true' the installation  will exit.
+- **varSrvName:** Specify the hostname of this local server machine where SC software will be  installed. The hostname can be a fully qualified hostname 
+- **varCommonUsrID:** Specify the common user ID. This user id will be used to install SC software. This user id needs to have administrative privileges for the server and the DB2 software.
+- **varCommonUsrPW:** Specify the valid password for the common user ID
+
+
     
     ### SC Install - Populate properties
     sc_db2_home_directory: '/db2/db2inst1'
@@ -114,7 +124,22 @@ This controls how to send the SC binary to the remote hosts.´
       varCommonUsrPW: 'mypassword'
 
 
-- Default Silent install Properties
+##### Default Silent install Properties
+
+- **language:** Specify the preferred installation language
+    - The supported values are:  cs, de, en, es, fr, it, ja, ko, pl, pt_BR, hu, ru, zh_CN, zh_TW
+- **user_install_dir:** Secify the directory where the SC software will be installed. In case of upgrade and resuming failed install scenarios, specify the directory where SC software is installed
+- **varTPCPortRangeSP:** Specify the range of the ports needed to install the SC software. SC needs 24 ports. 
+   - The default port range is 9549 to 9572. SC uses these default
+- **VarFullRollback:** Specify the type of rollback you would like the installer to perform in the event of a failure.  
+    -   a) 0 = partial rollback(default value)  
+    -   b) 1 = full rollback
+- **varUseLicenseKeyOnImage:** Specify whether to use the license key file present on the install image.
+    - a) 0 = use license key present on the install image (default value)
+    - b) 1 = provide the location of the license key file
+- **varLicenseKeyFile:** Specify the complete path for the license key file. if not using default.
+
+
 
 
         sc_properties_default:
@@ -237,8 +262,8 @@ Including an example of how to use the role.
             fenced_group_name: "db2fadm1"
             home_directory: "/db2/db2inst1"
             fenced_home_directory: "/db2/db2fenc1"
-            password: "$5$password$upgAGorzmriRQdPIkbUb9IZ7KQcSAdTr/TMtRpBEK37"
-            fenced_password: "$5$password$upgAGorzmriRQdPIkbUb9IZ7KQcSAdTr/TMtRpBEK37"
+            password: "mypassword"
+            fenced_password: "mypassword"
             uid: 11999
             gid: 11987
             fenced_uid: 11888
@@ -372,8 +397,8 @@ Including an example of how to use the role.
             fenced_group_name: "db2fadm1"
             home_directory: "/db2/db2inst1"
             fenced_home_directory: "/db2/db2fenc1"
-            password: "$5$password$upgAGorzmriRQdPIkbUb9IZ7KQcSAdTr/TMtRpBEK37"
-            fenced_password: "$5$password$upgAGorzmriRQdPIkbUb9IZ7KQcSAdTr/TMtRpBEK37"
+            password: "mypassword"
+            fenced_password: "mypassword"
             uid: 11999
             gid: 11987
             fenced_uid: 11888
@@ -437,6 +462,7 @@ Including an example of how to use the role.
 Tested on
 ---------
 - DB2 Version V11.1
+- IBM Spectrum Control 5.3.1 and 5.3.4
 - Centos 7.6 and 7.7 
 - Redhat 7.6 and 7.7
 
