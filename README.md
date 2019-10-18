@@ -253,7 +253,7 @@ Including an example of how to use the role.
         db2_license_creates: 'awse_o'
         ##
         ## DB2 Instance Configure.
-        ## Password need to be Hashed. example is hashed from "mypassword"
+        ## Password is plaintext and then it Hashed with ansible. example is "mypassword"
         ##
         db2_instances:
           - instance: "DB2INST"
@@ -388,7 +388,7 @@ Including an example of how to use the role.
         db2_license_creates: 'awse_o'
         ##
         ## DB2 Instance Configure.
-        ## Password need to be Hashed. example is hashed from "mypassword"
+        ## Password is plaintext and then it Hashed with ansible. example is "mypassword"
         ## 
         ##
         db2_instances:
