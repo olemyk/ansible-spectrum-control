@@ -166,14 +166,14 @@ This controls how to send the SC binary to the remote hosts.´
   - Set the Variable SC_upgrade: to 'True'
 
 
-    sc_upgrade: false
-    sc_properties_upgrade:
-      license_accept: 'false'
-      confirm_replication_uninstall: 'false'
-      confirm_reports_uninstall: 'false'
-      varAlertKeystorePW: 'default'
-      varDeviceKeystorePW: 'default'
-      varWebKeystorePW: 'default'
+        sc_upgrade: false
+        sc_properties_upgrade:
+          license_accept: 'false'
+          confirm_replication_uninstall: 'false'
+          confirm_reports_uninstall: 'false'
+          varAlertKeystorePW: 'default'
+          varDeviceKeystorePW: 'default'
+          varWebKeystorePW: 'default'
 
 
 Example Playbook
