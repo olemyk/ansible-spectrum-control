@@ -2,7 +2,7 @@ IBM Spectrum Control - Ansible Role
 =========
 [![GitHub Issues](https://img.shields.io/github/issues/olemyk/ansible-spectrum-control.svg)](https://github.com/olemyk/ansible-spectrum-control//issues) 
 [![GitHub Stars](https://img.shields.io/github/stars/olemyk/ansible-spectrum-control.svg?label=github%20%E2%98%85)](https://github.com/olemyk/ansible-spectrum-control/) 
-[![Role Downloads](https://img.shields.io/ansible/role/d/29538.svg)](https://galaxy.ansible.com/olemyk/ansible_spectrum_control/) 
+[![Role Downloads](https://img.shields.io/ansible/role/d/43987.svg)](https://galaxy.ansible.com/olemyk/ansible_spectrum_control/) 
 [![License](https://img.shields.io/github/license/olemyk/ansible-spectrum-control.svg)](LICENSE)
 [![Platform](http://img.shields.io/badge/platform-redhat-cc0000.svg?style=flat)](RedHat)
 [![Platform](http://img.shields.io/badge/platform-centos-932279.svg?style=flat)](CentOS)
@@ -464,7 +464,7 @@ Including an example of how to use the role.
 Tested on
 ---------
 - DB2 Version V11.1
-- IBM Spectrum Control 5.3.1 and 5.3.4
+- IBM Spectrum Control 5.3.1, 5.3.4, 5.3.5.1
 - Centos 7.6 and 7.7 
 - Redhat 7.6 and 7.7
 
@@ -485,7 +485,7 @@ Check that the version in your download folder is correct
 License
 -------
 
-Copyright 2019 Ole Kristian Myklebust, released under the [MIT license](LICENSE)
+Copyright 2020 Ole Kristian Myklebust, released under the [MIT license](LICENSE)
 
 Author Information
 ------------------
