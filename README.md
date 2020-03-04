@@ -13,7 +13,7 @@ Ansible role for installing and configuring IBM Spectrum Control on Linux.
 
 
 IBM® Spectrum Control™ provides monitoring, automation and analytics for multiple-vendor storage environments.
-For more information and IBM Spectrum Control documentation, check out [KnowledgeCenter](https://www.ibm.com/support/knowledgecenter/en/SS5R93_5.3.4/com.ibm.spectrum.sc.doc/tpc_kc_homepage.html)
+For more information and IBM Spectrum Control documentation, check out [KnowledgeCenter](https://www.ibm.com/support/knowledgecenter/en/SS5R93)
 
 
 Particularly looking for [feedback](https://github.com/olemyk/ansible-spectrum-control/issues) and future [requirements](https://github.com/olemyk/ansible-spectrum-control/issues/new)!
@@ -464,7 +464,7 @@ Including an example of how to use the role.
 Tested on
 ---------
 - DB2 Version V11.1
-- IBM Spectrum Control 5.3.1, 5.3.4, 5.3.5.1
+- IBM Spectrum Control 5.3.1, 5.3.4, 5.3.5.1, 5.3.6
 - Centos 7.6 and 7.7 
 - Redhat 7.6 and 7.7
 
