@@ -465,11 +465,8 @@ Tested on
 ---------
 - DB2 Version V11.1
 - IBM Spectrum Control 5.3.1, 5.3.4, 5.3.5.1, 5.3.6
-- Centos 7.6 and 7.7 
+- Centos 7.6, 7.7 and 8.1 
 - Redhat 7.6 and 7.7
-
-
-- Not tested on RedHat/Centos 8 yet.
 
 
 Troubleshoot

@@ -1,6 +1,6 @@
 galaxy_info:
-  author: Ole kristian Myklebust
-  description: Installation and configuration of IBN Spectrum Control
+  author: Ole Kristian Myklebust
+  description: Installation and configuration of IBM Spectrum Control
   company: IBM
   license: MIT
   min_ansible_version: 2.8
@@ -9,6 +9,7 @@ galaxy_info:
     - name: EL
       versions:
         - 7
+        - 8
 
   galaxy_tags:
     - ibm
