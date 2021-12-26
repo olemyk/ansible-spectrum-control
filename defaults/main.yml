@@ -6,24 +6,12 @@
 # Default unarchive names
 sc_creates: sc_binary
 sc_license_creates: sc_license
-
-
-#sc_binary:
-#  url: "http://10.33.3.56/sc/SC534/SPM_CTL_SERVER_V5.3.4_LINUX.tar.gz"
-#  location: "/download/installer/sc.tar.gz"
-#  dest: "/download/installer"
-#sc_license_binary:
-#  url: "http://10.33.3.56/sc/SC534/IBM_SPM_CTL_ADV_V5.3.4_Lcns_UNIX.tar.gz"
-#  location: "/download/installer/sc_license.tar.gz"
-#  dest: "/download/installer/"
-
 sc_binary_download_delete: true
 
 ########### Silent Install Properties file #############
 
 ## Temporary location for Silent file.
 sc_properties_location: '/tmp'
-
 
 sc_properties_default:
   language: 'en'

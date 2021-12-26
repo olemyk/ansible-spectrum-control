@@ -1,4 +1,7 @@
 # Version 0.1.1
+* Tested on Rhel 8.5 with Spectrum Control 5.4.5 and DB2 11.5.4
+
+# Version 0.1.1
 * Tested on Centos 8.1
 * Added Release Notes
 
