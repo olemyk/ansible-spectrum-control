@@ -1,0 +1,32 @@
+- hosts: sc
+  gather_facts: True
+  roles:
+     - olemyk.ansible_spectrum_control
+  vars:
+    ## Define the sc_binary and setup the URL to download.
+    ## Variable 'location' define where should put SC on ansible machine
+    ## Variable 'dest' define where should decompress SC on remote host
+    #sc_binary_download_delete: true
+    #sc_creates: sc
+    #sc_license_creates: sclicense
+    sc_binary:
+      url: "http://10.10.10.56/sc/SC545/SPM_CTL_SERVER_V5.4.5_LINUX.tar.gz"
+      location: "/download/installer/sc.tar.gz"
+      dest: "/download/installer"
+    sc_license_binary:
+      url: "http://10.10.10.56/sc/SC545/IBM_SPM_CTL_STD_V5.4.5_Lcns_UNIX.tar.gz"
+      location: "/download/installer/sc_license.tar.gz"
+      dest: "/download/installer/"
+    ######################################
+    ### IBM Spectrum Control Upgrade
+    ### Can't be combined with install
+    sc_upgrade: true
+    sc_upgrade_version: 5.4.5
+    sc_upgrade_user_install_dir: '/opt/IBM/TPC'
+    sc_properties_upgrade:
+      license_accept: 'true'
+      confirm_replication_uninstall: 'false'
+      confirm_reports_uninstall: 'false'
+      varAlertKeystorePW: 'default'
+      varDeviceKeystorePW: 'default'
+      varWebKeystorePW: 'default'

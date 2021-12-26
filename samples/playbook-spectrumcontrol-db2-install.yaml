@@ -1,0 +1,93 @@
+- hosts: sc
+  gather_facts: True
+  pre_tasks:
+    - name: Create DB2 Directory
+      file:
+        path: /db2
+        state: directory
+        mode: 0755
+    - name: Create Download Directory
+      file:
+        path: /download/installer
+        state: directory
+        mode: 0755
+  roles:
+     - olemyk.ansible_role_db2
+     - olemyk.ansible_spectrum_control
+  vars:
+    ## Define the db2_binary and setup the URL to download.
+    ## Variable location define where should put db2 on ansible machine
+    ## Variable dest define where should decompress DB2 on remote host
+    db2_binary:
+      url: "http://10.10.10.56/sc/SC534/DB2S_11.5.4_MPML.tar.gz"
+      location: "/download/installer/db2_11.5.4.tar.gz"
+      dest: "/download/installer"
+    db2_license_binary:
+      url: "http://10.10.10.56/sc/SC534/DB2_DSE_Activation_11.5.zip"
+      location: "/download/installer/db2_license.tar.gz"
+      dest: "/download/installer"
+    ##
+    ## On most DB2 compressed binary the tar.gz creates a file named server, but if your compressed file doesn't,
+    ## change this variable to the name of the folder that it creates.
+    ## For the Spectrum Scale DB2 binary package it uses server_t from 5.4 it creates server_dec
+    ## For the Spectrum Scale DB2 License package it uses awse_o frrom 5.4 it creates std_vpc
+    ##
+    db2_creates: 'server_dec'
+    db2_license_creates: 'std_vpc'
+    ##
+    ## DB2 Instance Configure.
+    ## Password is plaintext and then it Hashed with ansible. example is "mypassword"
+    ##
+    db2_instances:
+      - instance: "DB2INST"
+        name: "db2inst1"
+        group_name: "db2iadm1"
+        fenced_username: "db2fenc1"
+        fenced_group_name: "db2fadm1"
+        home_directory: "/db2/db2inst1"
+        fenced_home_directory: "/db2/db2fenc1"
+        password: "mypassword"
+        fenced_password: "mypassword"
+        uid: 11999
+        gid: 11987
+        fenced_uid: 11888
+        fenced_gid: 11876
+        options:
+          autostart: "YES"
+          start_during_install: "YES"
+        dbm_params:
+          intra_parallel: "YES"
+          numdb: "15"
+          SVCENAME: db2c_db2inst1
+          db2fcmcomm: "TCPIP4"
+    resp:
+      prod: "DB2_SERVER_EDITION"
+      file: "/opt/ibm/db2/V11.5"
+      lic_agreement: "ACCEPT" # ACCEPT or DECLINE
+      install_type: "TYPICAL" # TYPICAL, COMPACT, CUSTOM
+      install_tsamp: "NO"
+    ##
+    ## IBM Spectrum Control Variables
+    ## Define the sc_binary and setup the URL to download.
+    ## Variable 'location' define where should put SC on ansible machine
+    ## Variable 'dest' define where should decompress SC on remote host
+    ##
+    #sc_creates: sc
+    #sc_license_creates: sclicense
+    #sc_binary_download_delete: true
+    sc_binary:
+      url: "http://10.10.10.56/sc/SC534/SPM_CTL_SERVER_V5.3.4_LINUX.tar.gz"
+      location: "/download/installer/sc.tar.gz"
+      dest: "/download/installer"
+    sc_license_binary:
+      url: "http://10.10.10.56/sc/SC534/IBM_SPM_CTL_ADV_V5.3.4_Lcns_UNIX.tar.gz"
+      location: "/download/installer/sc_license.tar.gz"
+      dest: "/download/installer/"
+    ########################################
+    ### SC Install - Populate properties ###
+    sc_db2_home_directory: '/db2/db2inst1'
+    sc_properties:
+      license_accept: 'true'
+      varSrvName: 'lbs-sc.lbs.loc'
+      varCommonUsrID: 'db2inst1'
+      varCommonUsrPW: 'mypassword'
