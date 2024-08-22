@@ -11,7 +11,7 @@ sc_binary_download_delete: true
 ########### Silent Install Properties file #############
 
 ## Temporary location for Silent file.
-sc_properties_location: '/tmp'
+sc_properties_location: '/var/tmp'
 
 sc_properties_default:
   language: 'en'

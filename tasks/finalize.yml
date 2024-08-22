@@ -7,5 +7,5 @@
        Configuration is finished installing and configuring IBM Spectrum Control
        To access IBM Spectrum Control go to https://{{ ansible_default_ipv4.address }}:9569/srm/
       #######################################################################
-  debug:
+  ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"

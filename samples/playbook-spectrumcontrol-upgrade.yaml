@@ -21,7 +21,7 @@
     ### IBM Spectrum Control Upgrade
     ### Can't be combined with install
     sc_upgrade: true
-    sc_upgrade_version: 5.4.5
+    sc_upgrade_version: 5.4.12
     sc_upgrade_user_install_dir: '/opt/IBM/TPC'
     sc_properties_upgrade:
       license_accept: 'true'

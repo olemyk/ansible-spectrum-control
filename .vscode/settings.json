@@ -1,0 +1,6 @@
+{
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook": "file:///Users/olemyk/Library/CloudStorage/Box-Box/Git-Repos/ansible-spectrum-control/tasks/install_sc.yml"
+    },
+    "ansible.python.interpreterPath": "/usr/bin/python3"
+}

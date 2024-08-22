@@ -1,3 +1,6 @@
+# Version 1.0
+* Tested on Rhel 9.2 with Spectrum Control 5.4.12 and DB2 11.5.4
+
 # Version 0.1.1
 * Tested on Rhel 8.5 with Spectrum Control 5.4.5 and DB2 11.5.4
 
